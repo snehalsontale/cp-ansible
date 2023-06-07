@@ -1,0 +1,108 @@
+all:
+ vars:
+  ansible_connection: ssh
+  ansible_user: ubuntu
+  ansible_become: true
+  ansible_ssh_private_key_file: ops.kafka-dev-e1-default.pem
+  #SSL
+  #ssl_enabled: true
+  #ssl_provided_keystore_and_truststore: true
+  #ssl_truststore_filepath: "/home/ubuntu/ssl/kafka-truststore.jks"
+  #ssl_truststore_password: changeme
+  #ssl_keystore_filepath: "/home/ubuntu/ssl/{{inventory_hostname}}-keystore.jks"
+  #ssl_keystore_key_password: changeme
+  #ssl_keystore_store_password: changeme
+  #ssl_truststore_ca_cert_alias: root-ca
+  #regenerate_keystore_and_truststore: false
+  #RBAC BEGIN
+  #rbac_enabled: true
+  #kafka_broker_custom_listeners:
+  # broker:
+  #  name: BROKER
+  #  port: 9091
+  #  ssl_enabled: true
+  #  ssl_mutual_auth_enabled: true
+  # internal:
+  #  name: INTERNAL
+  #  port: 9092
+  #  ssl_enabled: true
+  #  ssl_mutual_auth_enabled: false
+  #  sasl_protocol: oauth
+  # client_listener:
+  #  name: CLIENT
+  #  port: 9093
+  #  ssl_enabled: true
+  #  ssl_mutual_auth_enabled: false
+  #  sasl_protocol: plain
+  #LDAP Users
+  #mds_super_user: mds
+  #mds_super_user_password: mds-secret
+  #kafka_broker_ldap_user: kafka
+  #kafka_broker_ldap_password: kafka-secret
+  #schema_registry_ldap_user: schemaregistry
+  #schema_registry_ldap_password: schema-secret
+  #kafka_connect_ldap_user: connect
+  #kafka_connect_ldap_password: connect-secret
+  #ksql_ldap_user: ksql
+  #ksql_ldap_password: ksql-secret
+  #kafka_rest_ldap_user: rest
+  #kafka_rest_ldap_password: rest-secret
+  #control_center_ldap_user: controlcenter
+  #control_center_ldap_password: c3-secret
+  # Below are optional variables
+  #create_mds_certs: true # To provide your own MDS Certs set this variable and the next two
+  #### RBAC END ####
+zookeeper:
+ hosts:
+  ip-172-32-62-99.us-west-2.compute.internal:
+  ip-172-32-72-53.us-west-2.compute.internal:
+  ip-172-32-92-44.us-west-2.compute.internal:
+kafka_broker:
+ #vars:
+ # rbac_component_additional_system_admins:
+ #  - "james"
+ #  - "srinivas"
+ #  - "snehal"
+ #  - "nermin"
+ # kafka_broker_custom_properties:
+ #  super.users: User:mds;User:CN=kafka.servers.kafka.BOOTCAMP-AMERICAS.CONFLUENT.IO;User:kafka.servers.kafka.bootcamp;User:nermin
+ #  allow.everyone.if.no.acl.found: true
+#   listener.name.broker.ssl.principal.mapping.rules: |
+#    RULE:^CN=([a-zA-Z0.9.]*).*$/$1/L , DEFAULT
+ #  listener.name.broker.ssl.principal.mapping.rules: "RULE:CN=([a-zA-Z0-9.]*).*$/$1/L,DEFAULT"
+ #  default.replication.factor: 2
+ #  min.insync.replicas: 2
+ #  listener.name.client.plain.sasl.server.callback.handler.class: io.confluent.security.auth.provider.ldap.LdapAuthenticateCallbackHandler
+   #ldap.java.naming.factory.initial: com.sun.jndi.ldap.LdapCtxFactory
+   #ldap.com.sun.jndi.ldap.read.timeout: 3000
+   #ldap.java.naming.provider.url: ldaps://samba.bootcamp-americas.confluent.io
+   #ldap.java.naming.security.principal: mds@bootcamp-americas.confluent.io
+   #ldap.java.naming.security.credentials: mds-secret
+   #ldap.java.naming.security.authentication: simple
+   #ldap.java.naming.security.protocol: SSL
+   #ldap.user.search.base: OU=users,OU=kafka,DC=bootcamp-americas,DC=confluent,DC=io
+   #ldap.user.name.attribute: sAMAccountName
+   #ldap.user.object.class: user
+   #ldap.search.mode: USERS
+   #ldap.user.search.scope: 2
+   #ldap.user.memberof.attribute: memberOf
+   #ldap.user.memberof.attribute.pattern: CN=(.*),OU=Groups,OU=Kafka,DC=bootcamp-americas,DC=confluent,DC=io
+ hosts:
+  ip-172-32-63-81.us-west-2.compute.internal:
+  ip-172-32-78-247.us-west-2.compute.internal:
+  ip-172-32-83-112.us-west-2.compute.internal:
+schema_registry:
+ hosts:
+  ip-172-32-58-49.us-west-2.compute.internal:
+      #kafka_rest:
+    #hosts:
+     # ip-172-32-56-7.us-west-2.compute.internal:
+ksql:
+ hosts:
+  ip-172-32-57-115.us-west-2.compute.internal:
+kafka_connect:
+ hosts:
+  ip-172-32-51-114.us-west-2.compute.internal:
+control_center:
+ hosts:
+  ip-172-32-63-171.us-west-2.compute.internal:
