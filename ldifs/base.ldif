@@ -1,0 +1,359 @@
+# Adding integer before ldif name to allow sequence order.
+ldifs:
+  000_kafkabase.ldif: |-
+    dn: cn=basekafka,{{ LDAP_BASE_DN }}
+    userPassword: kafka-secret-base
+    description: kafka user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basekafka
+  002_srbase.ldif: |-
+    dn: cn=basesr,{{ LDAP_BASE_DN }}
+    userPassword: sr-secret-base
+    description: schema registry user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basesr
+  003_c3base.ldif: |-
+    dn: cn=basec3,{{ LDAP_BASE_DN }}
+    userPassword: c3-secret-base
+    description: control center user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: basec3
+  004_ksqlbase.ldif: |-
+    dn: cn=baseksql,{{ LDAP_BASE_DN }}
+    userPassword: ksql-secret
+    description: ksql user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: baseksql
+  005_connectbase.ldif: |-
+    dn: cn=connectbase,{{ LDAP_BASE_DN }}
+    userPassword: connect-secret
+    description: connect user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: baseconnect
+  006_replicator.ldif: |-
+    dn: cn=replicator,{{ LDAP_BASE_DN }}
+    userPassword: replicator-secret
+    description: replicator user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: replicator
+  008_c3-test.ldif: |-
+    dn: cn=testadmin,{{ LDAP_BASE_DN }}
+    userPassword: testadmin
+    description: testadmin user
+    objectClass: simpleSecurityObject
+    objectClass: organizationalRole
+    cn: testadmin
+  009_c3-groupou.ldif: |-
+    dn: ou=users,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: User
+    dn: ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: organizationalUnit
+    ou: Groups
+  010_c3usersgroup.ldif: |-
+    dn: cn=c3users,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: c3users
+    gidNumber: 5000
+  011_readonlyusersgroup.ldif: |-
+    dn: cn=readonlyusers,ou=groups,{{ LDAP_BASE_DN }}
+    objectClass: top
+    objectClass: posixGroup
+    cn: readonlyusers
+    gidNumber: 5000
+
+  015_alice.ldif:  |-
+    dn: cn=alice,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: alice
+    sn: LookingGlass
+    givenName: Alice
+    cn: alice
+    displayName: Alice LookingGlass
+    uidNumber: 10000
+    gidNumber: 5000
+    userPassword: alice-secret
+    gecos: alice
+    loginShell: /bin/bash
+    homeDirectory: /home/alice
+  016_james.ldif:  |-
+    dn: cn=james,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: james
+    sn: LookingGlass
+    givenName: James
+    cn: james
+    displayName: James Logan
+    uidNumber: 10001
+    gidNumber: 5000
+    userPassword: james-secret
+    gecos: james
+    loginShell: /bin/bash
+    homeDirectory: /home/james
+  017_client.ldif: |-
+    dn: cn=client,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: client-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: client
+    sn: LookingGlass
+    givenName: Client
+    cn: client
+    displayName: Client
+    uidNumber: 10002
+    gidNumber: 5000
+    gecos: client
+    loginShell: /bin/bash
+    homeDirectory: /home/client
+  018_nermin.ldif: |-
+    dn: cn=nermin,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: nermin-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: nermin
+    sn: LookingGlass
+    givenName: Nermin
+    cn: nermin
+    displayName: Nermin
+    uidNumber: 10003
+    gidNumber: 5000
+    gecos: nermin
+    loginShell: /bin/bash
+    homeDirectory: /home/nermin
+  019_niyi.ldif: |-
+    dn: cn=niyi,ou=users,{{ LDAP_BASE_DN }}
+    userPassword: niyi-secret
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: niyi
+    sn: LookingGlass
+    givenName: niyi
+    cn: niyi
+    displayName: Niyi
+    uidNumber: 11003
+    gidNumber: 5000
+    gecos: niyi
+    loginShell: /bin/bash
+    homeDirectory: /home/niyi
+  022_kafka_user.ldif: |-
+    dn: cn=kafka,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: kafka
+    sn: LookingGlass
+    givenName: Kafka
+    cn: kafka
+    displayName: Apache Kafka
+    uidNumber: 10006
+    gidNumber: 5000
+    userPassword: kafka-secret
+    gecos: kafka
+    loginShell: /bin/bash
+    homeDirectory: /home/kafka
+  023_sr_user.ldif: |-
+    dn: cn=sr,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: sr
+    sn: LookingGlass
+    givenName: Schema Registry
+    cn: sr
+    displayName: Confluent Schema Registry
+    uidNumber: 10007
+    gidNumber: 5000
+    userPassword: sr-secret
+    gecos: sr
+    loginShell: /bin/bash
+    homeDirectory: /home/sr
+  024_connect_user.ldif: |-
+    dn: cn=connect,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: connect
+    sn: LookingGlass
+    givenName: Kafka Connect
+    cn: connect
+    displayName: Apache Kafka Connect
+    uidNumber: 10008
+    gidNumber: 5000
+    userPassword: connect-secret
+    gecos: connect
+    loginShell: /bin/bash
+    homeDirectory: /home/connect
+  025_ksql_user.ldif: |-
+    dn: cn=ksql,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: ksql
+    sn: LookingGlass
+    givenName: KSQLDB
+    cn: ksql
+    displayName: KSQLDB
+    uidNumber: 10009
+    gidNumber: 5000
+    userPassword: ksql-secret
+    gecos: ksql
+    loginShell: /bin/bash
+    homeDirectory: /home/ksql
+  026_c3_user.ldif: |-
+    dn: cn=c3,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: c3
+    sn: LookingGlass
+    givenName: Control Center
+    cn: c3
+    displayName: Control Center
+    uidNumber: 10010
+    gidNumber: 5000
+    userPassword: c3-secret
+    gecos: c3
+    loginShell: /bin/bash
+    homeDirectory: /home/c3
+  028_cl_user.ldif: |-
+    dn: cn=cl,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: cl
+    sn: LookingGlass
+    givenName: ClusterLink
+    cn: cl
+    displayName: ClusterLink
+    uidNumber: 10012
+    gidNumber: 5000
+    userPassword: cl-secret
+    gecos: cl
+    loginShell: /bin/bash
+    homeDirectory: /home/cl
+  029_se_user.ldif: |-
+    dn: cn=se,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: se
+    sn: LookingGlass
+    givenName: SchemaExporter
+    cn: se
+    displayName: Schema Exporter
+    uidNumber: 10013
+    gidNumber: 5000
+    userPassword: se-secret
+    gecos: se
+    loginShell: /bin/bash
+    homeDirectory: /home/se
+  030_replicator_user.ldif: |-
+    dn: cn=replicator,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: replicator
+    sn: LookingGlass
+    givenName: Confluent Replicator
+    cn: replicator
+    displayName: Confluent Replicator
+    uidNumber: 10114
+    gidNumber: 5000
+    userPassword: replicator-secret
+    gecos: replicator
+    loginShell: /bin/bash
+    homeDirectory: /home/replicator
+  031_dev1_user.ldif: |-
+    dn: cn=dev1,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev1
+    sn: LookingGlass
+    givenName: Developer_1
+    cn: dev1
+    displayName: Developer number 1
+    uidNumber: 10014
+    gidNumber: 5000
+    userPassword: dev1-secret
+    gecos: dev1
+    loginShell: /bin/bash
+    homeDirectory: /home/dev1
+  032_dev2_user.ldif: |-
+    dn: cn=dev2,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev2
+    sn: LookingGlass
+    givenName: Developer_2
+    cn: dev2
+    displayName: Developer number 2
+    uidNumber: 10015
+    gidNumber: 5000
+    userPassword: dev2-secret
+    gecos: dev2
+    loginShell: /bin/bash
+    homeDirectory: /home/dev2
+  033_dev3_user.ldif: |-
+    dn: cn=dev3,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: dev3
+    sn: LookingGlass
+    givenName: Developer_3
+    cn: dev3
+    displayName: Developer number 3
+    uidNumber: 10016
+    gidNumber: 5000
+    userPassword: dev3-secret
+    gecos: dev3
+    loginShell: /bin/bash
+    homeDirectory: /home/dev3
+  034_admin1_user.ldif: |-
+    dn: cn=admin1,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: admin1
+    sn: LookingGlass
+    givenName: Admin_1
+    cn: admin1
+    displayName: Admin number 1
+    uidNumber: 10017
+    gidNumber: 5000
+    userPassword: admin1-secret
+    gecos: admin1
+    loginShell: /bin/bash
+    homeDirectory: /home/admin1
+  035_admin2_user.ldif: |-
+    dn: cn=admin2,ou=users,{{ LDAP_BASE_DN }}
+    objectClass: inetOrgPerson
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    uid: admin2
+    sn: LookingGlass
+    givenName: Admin_2
+    cn: admin2
+    displayName: Admin number 2
+    uidNumber: 10018
+    gidNumber: 5000
+    userPassword: admin2-secret
+    gecos: admin2
+    loginShell: /bin/bash
+    homeDirectory: /home/admin2
