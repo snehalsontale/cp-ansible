@@ -4,6 +4,24 @@ all:
   ansible_user: ubuntu
   ansible_become: true
   ansible_ssh_private_key_file: ops.kafka-dev-e1-default.pem
+  
+  ## Add Confluent License
+  confluent_license: 
+  kafka_broker_custom_properties:
+    confluent.license: "{{ confluent_license }}"
+  schema_registry_custom_properties:
+    confluent.license: "{{ confluent_license }}"
+  kafka_connect_custom_properties:
+    confluent.license: "{{ confluent_license }}"
+  control_center_custom_properties:
+    confluent.license: "{{ confluent_license }}"
+  ksql_custom_properties:
+    confluent.license: "{{ confluent_license }}"
+  
+  ## Enable Monitoring
+  jmxexporter_enabled: true
+  
+  
   #SSL
   #ssl_enabled: true
   #ssl_provided_keystore_and_truststore: true
@@ -16,24 +34,25 @@ all:
   #regenerate_keystore_and_truststore: false
   #RBAC BEGIN
   #rbac_enabled: true
-  #kafka_broker_custom_listeners:
-  # broker:
-  #  name: BROKER
-  #  port: 9091
-  #  ssl_enabled: true
-  #  ssl_mutual_auth_enabled: true
-  # internal:
-  #  name: INTERNAL
-  #  port: 9092
-  #  ssl_enabled: true
-  #  ssl_mutual_auth_enabled: false
-  #  sasl_protocol: oauth
-  # client_listener:
-  #  name: CLIENT
-  #  port: 9093
-  #  ssl_enabled: true
-  #  ssl_mutual_auth_enabled: false
-  #  sasl_protocol: plain
+  ## Add Listeners
+  kafka_broker_custom_listeners:
+    broker:
+      name: BROKER
+      port: 9091
+      ssl_enabled: false
+      ssl_mutual_auth_enabled: false
+    internal:
+      name: INTERNAL
+      port: 9092
+      ssl_enabled: false
+      ssl_mutual_auth_enabled: false
+      #sasl_protocol: pl
+    client_listener:
+      name: CLIENT
+      port: 9093
+      ssl_enabled: false
+      ssl_mutual_auth_enabled: false
+      #sasl_protocol: plain
   #LDAP Users
   #mds_super_user: mds
   #mds_super_user_password: mds-secret
