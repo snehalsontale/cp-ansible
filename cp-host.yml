@@ -21,6 +21,12 @@ all:
   ## Enable Monitoring
   jmxexporter_enabled: true
   
+  # Set custom properties
+  zookeeper_custom_properties:
+    initLimit: 6
+    syncLimit: 3
+  kafka_broker_custom_properties:
+    num.io.threads: 15
   
   #SSL
   #ssl_enabled: true
@@ -108,6 +114,15 @@ kafka_broker:
    #ldap.user.memberof.attribute.pattern: CN=(.*),OU=Groups,OU=Kafka,DC=bootcamp-americas,DC=confluent,DC=io
  hosts:
   ip-172-32-63-81.us-west-2.compute.internal:
+   ## By default the first host will get broker id=1, second gets id=2. Set broker_id to customize
+   # broker_id: 3
+
+   ## Properties can also be applied on a host by host basis.
+   ## In the below example we configure a Multi-Region Clusters by setting the following properties on each host:
+   # kafka_broker:
+   #   properties:
+   #     broker.rack: us-east-1d
+   #     replica.selector.class: org.apache.kafka.common.replica.RackAwareReplicaSelector
   ip-172-32-78-247.us-west-2.compute.internal:
   ip-172-32-83-112.us-west-2.compute.internal:
 schema_registry:
