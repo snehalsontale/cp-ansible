@@ -83,6 +83,9 @@ zookeeper:
   ip-172-32-72-53.us-west-2.compute.internal:
   ip-172-32-92-44.us-west-2.compute.internal:
 kafka_broker:
+  vars:
+    kafka_broker_custom_properties:
+      replica.selector.class: org.apache.kafka.common.replica.RackAwareReplicaSelector
  #vars:
  # rbac_component_additional_system_admins:
  #  - "james"
@@ -114,23 +117,18 @@ kafka_broker:
    #ldap.user.memberof.attribute.pattern: CN=(.*),OU=Groups,OU=Kafka,DC=bootcamp-americas,DC=confluent,DC=io
  hosts:
   ip-172-32-63-81.us-west-2.compute.internal:
-   ## By default the first host will get broker id=1, second gets id=2. Set broker_id to customize
-   # broker_id: 3
-
-   ## Properties can also be applied on a host by host basis.
-   ## In the below example we configure a Multi-Region Clusters by setting the following properties on each host:
-   # kafka_broker:
-   #   properties:
-   #     broker.rack: us-east-1d
-   #     replica.selector.class: org.apache.kafka.common.replica.RackAwareReplicaSelector
+    ### MRC  
+    kafka_broker_custom_properties:
+      broker.rack: us-east-1a
   ip-172-32-78-247.us-west-2.compute.internal:
+    kafka_broker_custom_properties:
+      broker.rack: us-east-1b
   ip-172-32-83-112.us-west-2.compute.internal:
+    kafka_broker_custom_properties:
+      broker.rack: us-east-1d
 schema_registry:
  hosts:
   ip-172-32-58-49.us-west-2.compute.internal:
-      #kafka_rest:
-    #hosts:
-     # ip-172-32-56-7.us-west-2.compute.internal:
 ksql:
  hosts:
   ip-172-32-57-115.us-west-2.compute.internal:
