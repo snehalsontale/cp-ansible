@@ -5,6 +5,12 @@ all:
   ansible_become: true
   ansible_ssh_private_key_file: ops.kafka-dev-e1-default.pem
   
+  # To install Confluent Platform using a tarball placed on the control node:
+  installation_method: archive
+  confluent_archive_file_source: /path/to/confluent-7.3.3.tar.gz
+  confluent_archive_file_remote: false
+
+  
   ## Add Confluent License
   confluent_license: 
   kafka_broker_custom_properties:
@@ -20,6 +26,8 @@ all:
   
   ## Enable Monitoring
   jmxexporter_enabled: true
+  jmxexporter_url_remote: false
+  jmxexporter_jar_url: /path/to/jmx_prometheus_javaagent-0.12.0.jar
   
   # Set custom properties
   zookeeper_custom_properties:
