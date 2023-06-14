@@ -29,6 +29,13 @@ all:
   jmxexporter_url_remote: false
   jmxexporter_jar_url: /path/to/jmx_prometheus_javaagent-0.12.0.jar
   
+  ## Set Environment Variable for JMX in broker
+  kafka_broker_service_environment_overrides:
+    KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false"
+
+  # Enable Secrets Protection
+  #secrets_protection_enabled: true
+  
   # Set custom properties
   zookeeper_custom_properties:
     initLimit: 6
@@ -67,7 +74,55 @@ all:
       ssl_enabled: false
       ssl_mutual_auth_enabled: false
       #sasl_protocol: plain
+  
+  ## Kafka Authentication SASL_PLAIN
+  
+  #sasl_protocol: plain
+    #sasl_plain_users:
+      #admin:
+        #principal: 'kafka'
+        #password: 'admin-secret'
+      #schema_registry:
+        #principal: 'schema-registry'
+        #password: 'schema_registry-secret'
+      #kafka_connect:
+        #principal: 'kafka-connect'
+        #password: 'kafka_connect-secret'
+      #ksql:
+        #principal: 'ksqldb'
+        #password: 'ksql-secret'
+      #kafka_rest:
+        #principal: 'kafka_rest'
+        #password: 'kafka_rest-secret'
+      #control_center:
+        #principal: 'control-center'
+        #password: 'control_center-secret'
+      #kafka_connect_replicator:
+        #principal: 'kafka_connect_replicator'
+        #password: 'kafka_connect_replicator-secret'
+      #client:
+        #principal: 'client'
+        #password: 'client-secret'
+      #user1:
+        #principal: 'user1'
+        #password: my-secret
+      #user2:
+        #principal: 'user2'
+        #password: my-secret
+      #user3:
+        #principal: 'user3'
+        #password: my-secret
+
+    ## Kafka Authentication SASL_SCRAM
+    #sasl_protocol: scram256
+       #sasl_scram256_users:
+      #user1:
+        #principal: user1
+        #password: my-secret
+
+
   #LDAP Users
+  
   #mds_super_user: mds
   #mds_super_user_password: mds-secret
   #kafka_broker_ldap_user: kafka
@@ -93,7 +148,11 @@ zookeeper:
 kafka_broker:
   vars:
     kafka_broker_custom_properties:
-      replica.selector.class: org.apache.kafka.common.replica.RackAwareReplicaSelector
+       # Config for MRC Enablement
+       replica.selector.class: org.apache.kafka.common.replica.RackAwareReplicaSelector
+     
+      # Register the cluster in the cluster Registry using MDS
+      #kafka_broker_cluster_name: dev-nss-dish-wireless-cluster 
  #vars:
  # rbac_component_additional_system_admins:
  #  - "james"
@@ -123,26 +182,46 @@ kafka_broker:
    #ldap.user.search.scope: 2
    #ldap.user.memberof.attribute: memberOf
    #ldap.user.memberof.attribute.pattern: CN=(.*),OU=Groups,OU=Kafka,DC=bootcamp-americas,DC=confluent,DC=io
- hosts:
-  ip-172-32-63-81.us-west-2.compute.internal:
-    ### MRC  
-    kafka_broker_custom_properties:
-      broker.rack: us-east-1a
-  ip-172-32-78-247.us-west-2.compute.internal:
-    kafka_broker_custom_properties:
-      broker.rack: us-east-1b
-  ip-172-32-83-112.us-west-2.compute.internal:
-    kafka_broker_custom_properties:
-      broker.rack: us-east-1d
+  hosts:
+    ip-172-32-63-81.us-west-2.compute.internal:
+      broker_id: 1
+    ### MRC ### 
+      kafka_broker_custom_properties:
+        broker.rack: us-east-1a
+    
+    ip-172-32-78-247.us-west-2.compute.internal:
+      broker_id: 2
+    ### MRC ### 
+      kafka_broker_custom_properties:
+        broker.rack: us-east-1b
+    
+    ip-172-32-83-112.us-west-2.compute.internal:
+      broker_id: 3
+    ### MRC ### 
+      kafka_broker_custom_properties:
+        broker.rack: us-east-1d
+        
 schema_registry:
- hosts:
-  ip-172-32-58-49.us-west-2.compute.internal:
+ ## Register in Cluster Registry using MDS ##
+  #vars:
+    #schema_registry_custom_properties:
+      #schema_registry_cluster_name: dev-nss-dish-wireless-cluster 
+  hosts:
+    ip-172-32-58-49.us-west-2.compute.internal:
 ksql:
- hosts:
-  ip-172-32-57-115.us-west-2.compute.internal:
+ ## Register in Cluster Registry using MDS ##
+  #vars:
+    #ksql_custom_properties:
+      #ksql_cluster_name: dev-nss-dish-wireless-cluster
+  hosts:
+    ip-172-32-57-115.us-west-2.compute.internal:
 kafka_connect:
- hosts:
-  ip-172-32-51-114.us-west-2.compute.internal:
+ ## Register in Cluster Registry using MDS ##
+  #vars:
+    #kafka_connect_custom_properties:
+      #kafka_connect_cluster_name: dev-nss-dish-wireless-cluster
+  hosts:
+    ip-172-32-51-114.us-west-2.compute.internal:
 control_center:
- hosts:
-  ip-172-32-63-171.us-west-2.compute.internal:
+  hosts:
+    ip-172-32-63-171.us-west-2.compute.internal:
